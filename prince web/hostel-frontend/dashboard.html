@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="js/dashboard.js"></script>
+</head>
+<body>
+  <div class="top-buttons">
+    <a href="index.html" class="button-link">Back to Home</a>
+    <a href="login.html" class="button-link">Back to Login</a>
+  </div>
+
+  <div class="container">
+    <h1>Apply for a Room</h1>
+    <form id="applicationForm">
+      <input type="text" id="studentId" placeholder="Student ID" required>
+      <input type="email" id="email" placeholder="Email" required>
+
+      <select id="roomType" required>
+        <option value="">Select Room Type</option>
+        <option value="Single Room with AC">Single Room with AC</option>
+        <option value="Double Room with AC">Double Room with AC</option>
+        <option value="Double Room with Fan">Double Room with Fan</option>
+      </select>
+
+      <select id="roomNumber" required>
+        <option value="">Select Room Number</option>
+        <!-- Room numbers will be populated dynamically based on room type selection -->
+      </select>
+
+      <textarea id="reason" placeholder="Reason for applying" required></textarea>
+
+      <button type="submit" class="animated-button">Submit Application</button>
+    </form>
+  </div>
+
+  <script>
+    // Room data as JSON (this can be loaded from a separate file if needed)
+    const rooms = {
+      "Single Room with AC": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      "Double Room with AC": ["11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
+      "Double Room with Fan": ["21", "22", "23", "24", "25", "26", "27", "28", "29", "30"]
+    };
+
+    document.getElementById("roomType").addEventListener("change", function() {
+      const roomType = this.value;
+      const roomNumberSelect = document.getElementById("roomNumber");
+      
+      // Clear existing room number options
+      roomNumberSelect.innerHTML = '<option value="">Select Room Number</option>';
+
+      // Check if the selected room type exists in the JSON data
+      if (rooms[roomType]) {
+        // Populate room numbers based on selected room type
+        rooms[roomType].forEach(roomNumber => {
+          const option = document.createElement("option");
+          option.value = roomNumber;
+          option.textContent = `Room ${roomNumber}`;
+          roomNumberSelect.appendChild(option);
+        });
+      }
+    });
+  </script>
+
+  
+</body>
+</html>
